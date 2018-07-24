@@ -16,7 +16,7 @@ const path_1 = require("path");
 const fs_1 = require("fs");
 // const pkg = require('../package.json')
 // load .env using dotenv first
-require("env-autoload");
+require('dotenv').config();
 // instantiate express
 const app = express_1.default();
 const isProduction = process.env.NODE_ENV === 'production';

@@ -12,6 +12,7 @@ import store from './store'                     // Redux store
 // local styles
 import './styles/base.scss'                     // example local SASS/LESS
 
+
 ReactDom.render(                                // bootstrap the app
   <Provider store={store}>
     <HashRouter>

@@ -5,9 +5,11 @@ import { fromImmutable } from 'react-wrappers'
 import { Divider, Table } from 'semantic-ui-react'
 import Item from './Item'
 import AddItem from './AddItem'
+import EditModal from './EditModal'
 import list from '../../../state/list'
 
-const List = ({ items = [], addItem, removeItem, toggleIsActive }) =>
+const List = ({ items = [], addItem, removeItem, toggleIsActive, setEditTarget, closeModal, editItem, editingItem }) => {
+  return (
   <React.Fragment>
     <AddItem addItem={addItem} />
     <Divider horizontal>{ items.length } Items</Divider>
@@ -19,6 +21,7 @@ const List = ({ items = [], addItem, removeItem, toggleIsActive }) =>
           <Table.HeaderCell>Name</Table.HeaderCell>
           <Table.HeaderCell>Created</Table.HeaderCell>
           <Table.HeaderCell>Active</Table.HeaderCell>
+          <Table.HeaderCell>Edit Name</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
@@ -29,23 +32,30 @@ const List = ({ items = [], addItem, removeItem, toggleIsActive }) =>
                               item={item}
                               removeItem={() => removeItem(item.id)}
                               toggleIsActive={() => toggleIsActive(item.id)}
+                              setEditTarget={() => setEditTarget(item.id)}
                             />
                     )
         }
       </Table.Body>
     </Table>
+    <EditModal editItem={editItem}/>
   </React.Fragment>
+  )
+}
 
 List.propTypes = {
   items: PropTypes.array.isRequired,
   addItem: PropTypes.func.isRequired,
   removeItem: PropTypes.func.isRequired,
   toggleIsActive: PropTypes.func.isRequired,
+  setEditTarget: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-  items: list.getItems(state)
+  items: list.getItems(state),
+  editingItem: list.getEditingItem(state),
 })
+
 
 export const ConnectedList = connect(mapStateToProps, list.actions)(fromImmutable(List))
 

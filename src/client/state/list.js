@@ -5,8 +5,15 @@ import { createSelector } from 'reselect'
 export const namespace = 'list'
 
 const getItems = state => state.get('items')
+const getEditTarget = state => state.get('editTarget')
+const getItemById = (items, id) => items.find(i => i.get('id') === id)
 const getNumItems = state => state.get('items').size
 const getHalfItems = (items, number) => items.slice(0, Math.floor(number / 2))
+const isEditing = state => (state.get('editTarget') == undefined ? false : true)
+
+const getEditingItem = createSelector(
+  [ getItems, getEditTarget ], getItemById
+)
 
 const getItemsSorted = createSelector(
   [ getItems ],
@@ -27,7 +34,7 @@ const getHalfItemsSorted = createSelector(
 )
 
 export const selectors = {
-  getItems, getNumItems, getItemsSorted, getHalfItemsUnsorted, getHalfItemsSorted
+  getItems, getNumItems, getItemsSorted, getHalfItemsUnsorted, getHalfItemsSorted, getEditTarget, isEditing, getEditingItem
 }
 
 const Entry = new Record({
@@ -48,6 +55,7 @@ export const initialState = fromJS({
     { id: 6, name: 'vlad', date: new Date(), isActive: true },
     { id: 7, name: 'baxter', date: new Date(), isActive: true },
   ],
+  editTarget: undefined,
 })
 
 // define all action/reducer pairs here... add "type" attributes for
@@ -72,7 +80,23 @@ export const actionReducers = [
     // type: constants.REMOVE_ITEM,
     removeItem: id => ({ type: 'list/REMOVE_ITEM', id }),
     reducer: (state, action) => state.update('items', items => items.filter(i => i.get('id') !== action.id))
+  },
+  {
+    // type: SET TARGET ITEM TO EDIT
+    setEditTarget: id => ({ type: 'list/SET_EDIT_TARGET', id }),
+    reducer: (state, action) => state.set('editTarget', action.id)
+  },
+  {
+    editItem: (name = '') => ({ type: 'list/EDIT_TARGET', name }),
+    reducer: (state, action) => {
+      let updatedID = state.get('editTarget')
+      return state.update('items', items => items.map(item => item.get('id') === updatedID ? item.update('name', name => action.name) : item))
+    }
+  },
+  {
+    closeModal: () => ({ type: 'list/CLOSE_MODAL'}),
+    reducer: (state, action) => state.set('editTarget', undefined)
   }
 ]
 
-export default automap({ namespace, actionReducers, initialState, selectors, foo: 'bar' })
+export default automap({ namespace, actionReducers, initialState, selectors })

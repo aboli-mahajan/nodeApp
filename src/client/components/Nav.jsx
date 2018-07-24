@@ -8,7 +8,7 @@ import { ConnectedPackage } from './pages/Package'
 
 export const routes = [
   { path: '/list', name: 'List', component: ConnectedList },
-  { path: '/package', name: 'Package', component: ConnectedPackage },
+  { path: '/package', name: 'Package', component: ConnectedPackage }
 ]
 
 export const Nav = () =>
