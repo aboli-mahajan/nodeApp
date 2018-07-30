@@ -5,10 +5,12 @@ import { NavLink } from 'react-router-dom'
 // pages
 import { ConnectedList } from './pages/List'
 import { ConnectedPackage } from './pages/Package'
+import ChartLoader from './pages/Chart'
 
 export const routes = [
   { path: '/list', name: 'List', component: ConnectedList },
   { path: '/package', name: 'Package', component: ConnectedPackage }
+  { path: '/chart', name: 'Chart', component: ChartLoader }
 ]
 
 export const Nav = () =>

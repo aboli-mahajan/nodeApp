@@ -1938,6 +1938,10 @@ hawk@~3.1.3:
     hoek "2.x.x"
     sntp "1.x.x"
 
+highcharts@^6.0.4, highcharts@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-6.1.1.tgz#49dc34f5e963744ecd7eb87603b6cdaf8304c13a"
+
 history@^4.7.2:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/history/-/history-4.7.2.tgz#22b5c7f31633c5b8021c7f4a8a954ac139ee8d5b"
@@ -2819,6 +2823,10 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "0.0.8"
 
+moment@^2.22.2:
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -3506,6 +3514,16 @@ react-dom@>=16.4.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+react-highcharts@^16.0.2:
+  version "16.0.2"
+  resolved "https://registry.yarnpkg.com/react-highcharts/-/react-highcharts-16.0.2.tgz#7bdae039f9abb3f753ba88b6578d52630c18537a"
+  dependencies:
+    highcharts "^6.0.4"
+
+react-highstock@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-highstock/-/react-highstock-1.0.2.tgz#5549f709283267080c72fc6f852832b225b75f5d"
 
 react-hot-loader@^4.3.3:
   version "4.3.3"
