@@ -17,7 +17,11 @@
     "body-parser": "^1.18.3",
     "compression": "^1.7.2",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3"
+    "echarts": "^4.1.0",
+    "echarts-for-react": "^2.0.13",
+    "express": "^4.16.3",
+    "react-grid-layout": "^0.16.6",
+    "react-highcharts": "^16.0.2"
   },
   "devDependencies": {
     "axios": "^0.18.0",

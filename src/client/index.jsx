@@ -4,6 +4,8 @@ import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css'       // load base styles
+import 'react-grid-layout/css/styles.css'		// load react grid layout styles
+import 'react-resizable/css/styles.css'			// load react resizable styles
 
 // local imports
 import App from './components/App'              // root React component
