@@ -60,31 +60,3 @@ const mapStateToProps = state => ({
 export const ConnectedList = connect(mapStateToProps, list.actions)(fromImmutable(List))
 
 export default List
-
-
-
-
-
-/* mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-a.js
-
-export const foo = 'bar'
-export const cat = 'dog'\
-
-export default {
-  foo, cat
-}
-
-mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-
-b.js
-
-import myLib, { foo } from 'a.js'
-
-console.log(foo) // 'bar'
-console.log(myLib.foo) // { cat: 'dog' }
-
-*/
-
-
-

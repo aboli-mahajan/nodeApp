@@ -21,7 +21,7 @@ class Layout extends React.Component {
           name: 'Block 1',
           layouts: {
             lg: [
-              {x: 0, y: 0, w: 6, h: 10},
+              {x: 0, y: 0, w: 12, h: 10},
             ], 
             sm: [
               {x: 0, y: 0, w: 6, h: 10},
@@ -35,10 +35,10 @@ class Layout extends React.Component {
           name: 'Block 2',
           layouts: {
             lg: [
-              {x: 0, y: 5, w: 3, h: 8},
+              {x: 0, y: 5, w: 6, h: 8},
             ], 
             sm: [
-              {x: 0, y: 5, w: 3, h: 8},
+              {x: 0, y: 5, w: 6, h: 8},
             ]
           },
           chartType: undefined,
@@ -49,10 +49,10 @@ class Layout extends React.Component {
           name: 'Block 3',
           layouts: {
             lg: [
-              {x: 3, y: 5, w: 3, h: 8},
+              {x: 6, y: 5, w: 6, h: 8},
             ], 
             sm: [
-              {x: 3, y: 5, w: 3, h: 8},
+              {x: 3, y: 5, w: 6, h: 8},
             ]
           },
           chartType: undefined,
@@ -61,14 +61,13 @@ class Layout extends React.Component {
       ],
       selectedPanel: undefined,
       breakpoints: { lg: 1200, sm: 768 },
-      cols: { lg: 6, sm: 6 }
+      cols: { lg: 12, sm: 6 }
       
     }
 
     this.generateLayouts = this.generateLayouts.bind(this)
     this.buttonClick = this.buttonClick.bind(this)
     this.onSidebarHide = this.onSidebarHide.bind(this)
-    // this.selectedOption = this.selectedOption.bind(this)
     this.getPanels = this.getPanels.bind(this)
     this.onResizeStop = this.onResizeStop.bind(this)
     this.onDragStop = this.onDragStop.bind(this)
@@ -76,11 +75,12 @@ class Layout extends React.Component {
     this.saveConfigHandler = this.saveConfigHandler.bind(this)
     this.setChartType = this.setChartType.bind(this)
     this.onSaveConfig = this.onSaveConfig.bind(this)
+    this.onLayoutChange = this.onLayoutChange.bind(this)
   }
 
   async componentDidMount() {
     let data = await axios
-                      .get('http://crypto-monitor.fstar.me/api/volumes/BTC-USD/byHour?limit=50&show=date,high,low')
+                      .get('http://crypto-monitor.fstar.me/api/volumes/BTC-USD/byHour?limit=100&show=date,high,low')
                       .then(r => r.data)
                       .then(r => r.map(entry => ({
                         date: new Date(entry.date).getTime(),
@@ -93,7 +93,7 @@ class Layout extends React.Component {
   }
 
   onLayoutChange(layout, layouts) {
-    // console.log('onLayoutChange')
+  //   console.log('onLayoutChange')
   }
 
   onResizeStop(layout) {
@@ -101,7 +101,7 @@ class Layout extends React.Component {
   }
 
   getSize(width) {
-    if(width <= 1200) {
+    if(width < 1200) {
       return 'sm'
     }
     else {
@@ -114,7 +114,6 @@ class Layout extends React.Component {
     var new_layout= {}
 
     var size = this.getSize(this.gridContainer.state.width)
-
     panels.forEach((panel) => {
       new_layout = (({ x, y, w, h }) => ({ x, y, w, h }))(layout.find((layoutItem) => { return panel.id.toString() == layoutItem.i }))
       panel.layouts[size][0] = new_layout
@@ -155,36 +154,7 @@ class Layout extends React.Component {
     this.setState({ selectedPanel: selectedPanel })
   }
 
-  // selectedOption(type, selectedPanel) {
-  //   console.log('timeseriesConfig', timeseries)
-  //   console.log('type', type)
-  //   console.log('selectedPanel', selectedPanel)
-
-  //   var config = {}
-  //   switch(type) {
-  //     case 'line':
-  //     case 'bar':
-  //     case 'scatter': {
-  //       config = Object.assign({}, timeseries, {
-  //         series: [{
-  //           type: type,
-  //           data: this.state.data.map(x => {
-  //             return {
-  //               name: x.date,
-  //               value: [x.date, x.high]
-  //             }
-  //           })
-  //         }]
-  //       })
-  //       break;
-  //     }
-  //   }
-
-  //   this.setState({ panels: this.state.panels.map((panel) => panel.id === this.state.selectedPanel.id ? (Object.assign(panel, {chartConfig: config})) : panel) })
-  // }
-
   setChartType(type, selectedPanel) {
-    console.log('type', type)
     var config = {}
     switch(type) {
       case 'line':
@@ -199,7 +169,10 @@ class Layout extends React.Component {
                 value: [x.date, x.high]
               }
             })
-          }]
+          }],
+          yAxis: {
+            min: 'dataMin'
+          }
         })
 
         if(type == "area") {
@@ -213,6 +186,7 @@ class Layout extends React.Component {
     this.setState({ panels: this.state.panels.map((panel) => panel.id === this.state.selectedPanel.id ? (Object.assign(panel, {chartConfig: config, chartType: type})) : panel), selectedPanel: Object.assign(selectedPanel, {chartType: type}) })
   }
 
+  // Not used currently
   saveConfigHandler(chartConfig, chartFeatures, selectedPanel) {
     console.log('saveConfigHandler chartFeatures', chartFeatures)
     this.onSidebarHide()
@@ -249,8 +223,6 @@ class Layout extends React.Component {
   }
 
   onSaveConfig(attribute, chartFeatures, selectedPanel) {
-    console.log('onSaveConfig', chartFeatures)
-
     var config = {}
     switch(attribute) {
       case 'chartName': {
@@ -276,7 +248,7 @@ class Layout extends React.Component {
     console.log('Panels in state', this.state.panels)
     return this.state.panels.map((panel) => {
         return <div key={panel.id} style={{background: '#F2F4F4', position: 'relative'}}>
-          {panel.chartConfig == undefined ? (<Button className='middle' style={{left: "48%"}} onClick={() => this.buttonClick(panel.id)}>Add Widget</Button>) : <Panel config={panel.chartConfig} onEditHandler={() => this.onEditHandler(panel.id)}/>}
+          {panel.chartConfig == undefined ? (<Button className="middle" style={{left: "48%"}} onClick={() => this.buttonClick(panel.id)}>Add Widget</Button>) : <Panel config={panel.chartConfig} onEditHandler={() => this.onEditHandler(panel.id)}/>}
         </div>
     })
   }

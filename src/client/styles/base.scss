@@ -72,3 +72,7 @@ li {
    margin-top: -1em;
    text-align: center;
  }
+
+.ui.checked.toggle.checkbox input:checked~label {
+  color: rgb(231, 231, 231)!important;
+}

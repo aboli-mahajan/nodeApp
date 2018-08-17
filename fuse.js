@@ -81,7 +81,7 @@ task('default', async context => {
 
   const client = FuseBox.init(clientConfig(false))
   const server = FuseBox.init(serverConfig(false))
-  client.dev({ port: 4445, httpServer: false })
+  client.dev({ port: 4440, httpServer: false })
 
   client
     .bundle('app')

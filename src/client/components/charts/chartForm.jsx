@@ -39,12 +39,10 @@ class ChartForm extends React.Component {
   }
 
   setConfigSeriesName() {
-    console.log('set config seriesname')
     this.props.onSaveConfig('seriesName', this.state.features, this.props.selectedPanel)
   }
 
   setConfigTitle() {
-    console.log('on title submit', this.state.features.chartName)
     this.props.onSaveConfig('chartName', this.state.features, this.props.selectedPanel)
   }
 
@@ -56,7 +54,7 @@ class ChartForm extends React.Component {
       if(selectedPanel.chartConfig != undefined) {
         this.setState({ features: { 
                                   chartName: selectedPanel.chartConfig.title.text,
-                                  tooltipEnabled: Object.keys(selectedPanel.chartConfig.tooltip).length == 0,
+                                  tooltipEnabled: !!selectedPanel.chartConfig.tooltip,
                                   seriesName: selectedPanel.chartConfig.series[0].name 
                                 } 
                       })

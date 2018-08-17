@@ -5,7 +5,7 @@ import Navigation, { routes } from './Nav'
 
 const App = () =>
   <div>
-    <h1>FuseBox Boilerplate</h1>
+    <h1>Dashboard</h1>
     <Navigation />
     <div className="page-content">
       <Switch>
